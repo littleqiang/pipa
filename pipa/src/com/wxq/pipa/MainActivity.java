@@ -1,70 +1,197 @@
 package com.wxq.pipa;
 
-import java.io.UnsupportedEncodingException;
-
-import org.json.JSONObject;
-
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.wxq.pipa.utils.Constants;
-import com.wxq.pipa.utils.CustomReqeust;
+public class MainActivity extends Activity
 
+implements
 
-public class MainActivity extends ActionBarActivity {
+OnClickListener,
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    
-    RequestQueue mQueue= Volley.newRequestQueue(MainActivity.this);
-    String param="����";
-    final String url= Constants.BASEURL+Constants.URLBOOK+ Constants.METHOD.search+"?"+"tag="+param+"&start=0&count=";
-    Log.d("TAG",url);
-    CustomReqeust request = new CustomReqeust(url, "CustomVolley", new Listener<String>() {  
-      
-      @Override  
-      public void onResponse(String arg0) {  
-          Log.d("onResponse", arg0);  
-      }  
-  }, new ErrorListener() {  
+ViewTreeObserver.OnTouchModeChangeListener, // 用于监听 Touch 和非 Touch 模式的转换
 
-      @Override  
-      public void onErrorResponse(VolleyError arg0) {  
-          Log.d("onErrorResponse", arg0.toString());  
-      }  
-  }); 
-    mQueue.add(jsonObjectRequest); 
-  }
+		ViewTreeObserver.OnGlobalLayoutListener, // 用于监听布局之类的变化，比如某个空间消失了
 
+		ViewTreeObserver.OnPreDrawListener, // 用于在屏幕上画 View 之前，要做什么额外的工作
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.main, menu);
-    return true;
-  }
+		ViewTreeObserver.OnGlobalFocusChangeListener {
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-    if (id == R.id.action_settings) {
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
+	private TextView tv_show;
+
+	private ViewTreeObserver vto;
+
+	private View all;
+
+	private EditText ed1;
+
+	private EditText ed2;
+
+	private TextView tv_display;
+
+	private Button button;
+
+	private boolean btnClicked;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+
+	{
+
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_main);
+
+		tv_show = (TextView) this.findViewById(R.id.tv_show);
+
+		all = this.findViewById(R.id.full_screen); // 得到整个屏幕对象 ， 因为顶层 layout 的
+													// width 和 height 都是
+													// fill_parent
+
+		vto = (ViewTreeObserver) all.getViewTreeObserver(); // 通过
+															// getViewTreeObserver
+															// 获得
+															// ViewTreeObserver
+															// 对象
+
+		tv_display = (TextView) this.findViewById(R.id.tv_display);
+
+		ed1 = (EditText) this.findViewById(R.id.ed_enter1);
+
+		ed2 = (EditText) this.findViewById(R.id.ed_enter2);
+
+		button = (Button) this.findViewById(R.id.button);
+
+		button.setOnClickListener(this);
+
+		vto.addOnTouchModeChangeListener(this); // 增加对应的 Listener
+
+		vto.addOnGlobalFocusChangeListener(this); // 增加对应的 Listener
+
+		vto.addOnPreDrawListener(this); // 增加对应的 Listener
+
+		vto.addOnGlobalLayoutListener(this); // 增加对应的 Listener
+
+	}
+
+	// onTouchModeChanged 是接口 ViewTreeObserver.OnTouchModeChangeListener
+
+	// 中定义的方法。
+
+	@Override
+	public void onTouchModeChanged(boolean isInTouchMode)
+
+	{
+
+		if (isInTouchMode)
+			tv_show.setText("In touch mode");
+
+		else
+			tv_show.setText("Not in touch mode");
+
+	}
+
+	// onGlobalLayout 是接口 ViewTreeObserver.OnGlobalLayoutListener
+
+	// 中定义的方法。
+
+	// Callback method to be invokedwhen the global layout state or the
+
+	// visibility of views within the view treechanges
+
+	@Override
+	public void onGlobalLayout()
+
+	{
+
+		if (btnClicked)
+
+		{
+
+			if (!ed2.isShown())
+
+				ed1.setText(" 第二个 EditText 不见了 ");
+
+			else
+
+				ed1.setText(" 第二个 EditText 出来了 ");
+
+		}
+
+	}
+
+	// onPreDraw 是接口 ViewTreeObserver.OnPreDrawListener
+
+	// 中定义的方法。
+
+	@Override
+	public boolean onPreDraw()
+
+	{
+
+		// 在屏幕上画出 ed1 控件之间 ， 给它增加一个提示 ， 并改变其字体大小
+
+		ed1.setHint(" 在 onPreDraw 方法中增加一个提示信息 ");
+
+		ed1.setTextSize((float) 20.0);
+
+		// return false; // Return true to proceed with the current drawing
+		// pass, or falseto cancel.
+
+		return true; // 如果此处不返回 true ， 则整个界面不能完整显示。
+
+	}
+
+	// onGlobalFocusChanged 是接口 ViewTreeObserver.OnGlobalFocusChangeListener
+
+	// 中定义的方法。
+
+	// 焦点发生变化时，会触发这个方法的执行
+
+	@Override
+	public void onGlobalFocusChanged(View oldFocus, View newFocus)
+
+	{
+
+		if (oldFocus != null && newFocus != null)
+
+		{
+
+			tv_display.setText("Focus /nFROM:/t" + oldFocus.toString()
+					+ "/n    TO:/t" + newFocus.toString());
+
+		}
+
+	}
+
+	@Override
+	public void onClick(View v)
+
+	{
+
+		// 改变 ed2 的可见性 ， 会触发 onGlobalLayout 方法的执行
+
+		btnClicked = true;
+
+		if (v.getId() == R.id.button)
+
+		{
+
+			if (ed2.isShown())
+
+				ed2.setVisibility(View.INVISIBLE);
+
+			else
+
+				ed2.setVisibility(View.VISIBLE);
+
+		}
+
+	}
 }
