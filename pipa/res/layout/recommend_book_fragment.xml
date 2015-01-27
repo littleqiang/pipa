@@ -8,6 +8,17 @@
         android:layout_width="match_parent"
     android:layout_height="50dp"
     android:text="推荐图书"/>
-    
+    <com.wxq.pipa.waterfall.widget.XListView
+        xmlns:app="http://schemas.android.com/apk/res/com.wxq.pipa"
+        android:id="@+id/water_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fastScrollEnabled="true"
+        android:paddingLeft="7.0dip"
+        android:paddingRight="7.0dip"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        app:cacheColorHint="@color/transparent"
+        app:listSelector="@color/transparent" />
 
 </LinearLayout>
