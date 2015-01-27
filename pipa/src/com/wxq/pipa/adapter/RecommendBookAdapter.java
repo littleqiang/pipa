@@ -1,38 +1,38 @@
 package com.wxq.pipa.adapter;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
-import com.lan.nicehair.R;
-import com.lan.nicehair.common.ScaleImageView;
-import com.lan.nicehair.common.model.FindHairItem;
-import com.lan.nicehair.utils.ImageFetcher;
-import com.lan.nicehair.utils.ImageWorker;
-import com.lan.nicehair.waterfall.widget.XListView;
-import com.wxq.pipa.common.bean.BookInfo;
-
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wxq.pipa.R;
+import com.wxq.pipa.common.bean.BookInfo;
 
 public class RecommendBookAdapter extends BaseAdapter {
 
 	 private Context mContext;
-     public List<BookInfo> mListInfos;
-     private ImageFetcher mImageFetcher;
+     public LinkedList<BookInfo> mListInfos;
+     DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()  
+     .showImageOnLoading(R.drawable.general_loading)  
+     .showImageOnFail(R.drawable.zwsz)  
+     .cacheInMemory(true)  
+     .cacheOnDisk(true)  
+     .bitmapConfig(Bitmap.Config.RGB_565)  
+     .build(); 
 
-     public RecommendBookAdapter(Context context, ImageFetcher imageFetcher) {
+     public RecommendBookAdapter(Context context) {
          mContext = context;
-         mListInfos = new ArrayList<BookInfo>();
-         mImageFetcher = imageFetcher;
+         mListInfos = new LinkedList<BookInfo>();
      }
 
      @Override
@@ -47,15 +47,15 @@ public class RecommendBookAdapter extends BaseAdapter {
 
      @Override
      public long getItemId(int arg0) {
-         return 0;
+         return arg0;
      }
 
      public void addItemLast(List<BookInfo> datas) {
     	 mListInfos.addAll(datas);
      }
 
-     public void addItemTop(List<FindHairItem> datas) {
-         for (FindHairItem info : datas) {
+     public void addItemTop(List<BookInfo> datas) {
+         for (BookInfo info : datas) {
         	 mListInfos.addFirst(info);
          }
      }
@@ -65,28 +65,20 @@ public class RecommendBookAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		ViewHolder holder=null;
 		if(convertView==null) {
-			convertView=LayoutInflater.from(mContext).inflate(R.layout.poster_item_two, null);
+			convertView=LayoutInflater.from(mContext).inflate(R.layout.recommend_book_item, null);
 			holder=new ViewHolder(convertView);
 			convertView.setTag(holder);
 		}else {
 			holder=(ViewHolder) convertView.getTag();
 		}
-		FindHairItem info=mListInfos.get(position);
-		holder.poster_scanNumTv.setText(String.valueOf(info.getLookCount()));
-		holder.poster_praiseNumTv.setText(String.valueOf(info.getPariseCount()));
-		holder.poster_commentNumTv.setText(String.valueOf(info.getChatCount()));
-		holder.poster_nameTv.setText(info.getTitle());
-        mImageFetcher.loadImage(info.getPicUrl(), holder.imageView);
+		BookInfo info=mListInfos.get(position);
+		ImageLoader.getInstance().displayImage(info.getImages().getLarge(),holder.imageView, displayImageOptions);  
 		return convertView;
 	}
 	public class ViewHolder{
-		@InjectView(R.id.poster_item_displayIv) ImageView imageView;
-		@InjectView(R.id.poster_scanNumTv) TextView poster_scanNumTv;
-		@InjectView(R.id.poster_praiseNumTv) TextView poster_praiseNumTv;
-		@InjectView(R.id.poster_commentNumTv) TextView poster_commentNumTv;
-		@InjectView(R.id.poster_nameTv) TextView poster_nameTv;
+		@ViewInject(R.id.network_image_view) ImageView imageView;
 		public ViewHolder(View view) {
-			ButterKnife.inject(this, view);
+			ViewUtils.inject(this, view);
 		}
 	}
 

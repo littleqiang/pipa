@@ -4,6 +4,7 @@
 package com.wxq.pipa.common.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -21,12 +22,13 @@ public class BookInfo implements Serializable{
 	private String title;
 	private String url;
 	private String image;
-	private String author;//作者
-	private String translator;//翻译
+	private Images images;
+	private List<String> author;//作者
+	private List<String> translator;//翻译
 	private String publisher;//出版公司
 	private String pubdate;//出版时间
 	private Rating rating;
-	private Tags tags;
+	private List<Tags> tags;
 	private String binding;
 	private String price;
 	private Series series;
@@ -60,19 +62,19 @@ public class BookInfo implements Serializable{
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-	public String getTranslator() {
-		return translator;
-	}
-	public void setTranslator(String translator) {
-		this.translator = translator;
-	}
-	public String getPublisher() {
+	public List<String> getAuthor() {
+    return author;
+  }
+  public void setAuthor(List<String> author) {
+    this.author = author;
+  }
+  public List<String> getTranslator() {
+    return translator;
+  }
+  public void setTranslator(List<String> translator) {
+    this.translator = translator;
+  }
+  public String getPublisher() {
 		return publisher;
 	}
 	public void setPublisher(String publisher) {
@@ -90,13 +92,13 @@ public class BookInfo implements Serializable{
 	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
-	public Tags getTags() {
-		return tags;
-	}
-	public void setTags(Tags tags) {
-		this.tags = tags;
-	}
-	public String getBinding() {
+	public List<Tags> getTags() {
+    return tags;
+  }
+  public void setTags(List<Tags> tags) {
+    this.tags = tags;
+  }
+  public String getBinding() {
 		return binding;
 	}
 	public void setBinding(String binding) {
@@ -150,6 +152,12 @@ public class BookInfo implements Serializable{
 	public void setEbook_price(String ebook_price) {
 		this.ebook_price = ebook_price;
 	}
+  public Images getImages() {
+    return images;
+  }
+  public void setImages(Images images) {
+    this.images = images;
+  }
 	
 
 }
