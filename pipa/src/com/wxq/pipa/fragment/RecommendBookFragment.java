@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.wxq.pipa.R;
+import com.wxq.pipa.activity.TopSearchActivity;
 import com.wxq.pipa.adapter.RecommendBookAdapter;
 import com.wxq.pipa.common.Constants;
 import com.wxq.pipa.common.Constants.METHOD;
@@ -34,6 +37,10 @@ public class RecommendBookFragment extends BaseFragment implements IXListViewLis
 	private LinkedList<BookInfo> mListInfos= new LinkedList<BookInfo>();
 	private RecommendBookAdapter mAdapter;
 	private int currentPage = 1;
+	@OnClick(R.id.search_Iv)
+	public void onSearchClick(View v){
+		startActivity(new Intent(RecommendBookFragment.this.getActivity(),TopSearchActivity.class));
+	};
 	
   public static RecommendBookFragment newInstance(int position) {
     RecommendBookFragment fragment = new RecommendBookFragment();
@@ -45,7 +52,8 @@ public class RecommendBookFragment extends BaseFragment implements IXListViewLis
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-      View contentView = inflater.inflate(R.layout.recommend_book_fragment, container, false);
+     super.onCreateView(inflater, container, savedInstanceState);
+	  View contentView = inflater.inflate(R.layout.recommend_book_fragment, container, false);
       ViewUtils.inject(this,contentView);
       mWaterList.setPullLoadEnable(true);
       mWaterList.setXListViewListener(this);

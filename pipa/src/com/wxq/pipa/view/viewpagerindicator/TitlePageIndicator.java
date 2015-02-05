@@ -330,6 +330,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         return mPaintText.getTypeface();
     }
 
+    private int titleViewHeight;
     /*
      * (non-Javadoc)
      *
@@ -338,7 +339,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        titleViewHeight=canvas.getHeight();
         if (mViewPager == null) {
             return;
         }
@@ -686,6 +687,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         CharSequence title = getTitle(index);
         bounds.right = (int) paint.measureText(title, 0, title.length());
         bounds.bottom = (int) (paint.descent() - paint.ascent());
+        mTopPadding=(titleViewHeight-bounds.bottom)/2-bounds.bottom/4;
         return bounds;
     }
 

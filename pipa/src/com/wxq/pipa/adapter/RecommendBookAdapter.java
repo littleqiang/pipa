@@ -24,8 +24,8 @@ public class RecommendBookAdapter extends BaseAdapter {
 	 private Context mContext;
      public LinkedList<BookInfo> mListInfos;
      DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()  
-     .showImageOnLoading(R.drawable.general_loading)  
-     .showImageOnFail(R.drawable.zwsz)  
+     .showImageOnLoading(R.drawable.img_loading)  
+     .showImageOnFail(R.drawable.img_fail)  
      .cacheInMemory(true)  
      .cacheOnDisk(true)  
      .bitmapConfig(Bitmap.Config.RGB_565)  

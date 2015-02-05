@@ -3,14 +3,13 @@ package com.wxq.pipa.fragment;
 
 
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 /**
- * Created by lanyj
+ * 
  */
 public class BaseFragment extends Fragment {
-
-    @Override
+	
+	@Override
     public void onStop() {
         super.onStop();
       

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.app.choumei.hairstyle"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48.0dip"
+            android:background="@color/mainColor" >
+
+            <Button
+                android:id="@+id/btn_right"
+                android:layout_width="67.0dip"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/transparent"
+                android:text="@string/cancle_search_text"
+                android:textColor="@color/white"
+                android:textSize="18.0sp" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toLeftOf="@+id/btn_right"
+                android:background="@drawable/search_input_bg"
+                android:paddingLeft="8.5dip"
+                android:paddingRight="8.5dip" >
+
+                <ImageView
+                    android:id="@+id/iv_search_icon"
+                    android:layout_width="13.0dip"
+                    android:layout_height="13.0dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/search_icon"
+                    android:layout_marginRight="4.0dip" />
+
+                <EditText
+                    android:id="@+id/et_search_topic"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_toLeftOf="@+id/iv_search_clear"
+                    android:layout_toRightOf="@+id/iv_search_icon"
+                    android:background="@color/transparent"
+                    android:hint="@string/search_input_hint"
+                    android:singleLine="true"
+                    android:textSize="14.0sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_loading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

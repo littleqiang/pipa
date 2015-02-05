@@ -8,7 +8,7 @@
     <com.wxq.pipa.view.viewpagerindicator.TitlePageIndicator
         android:id="@+id/indicator"
         android:padding="10dip"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_width="fill_parent"
         />
     <android.support.v4.view.ViewPager

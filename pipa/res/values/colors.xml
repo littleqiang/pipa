@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<color name="mainColor">#48D1CC</color>
 <color name="transparent">#00000000</color>
+<color name="white">#FFFFFF</color>
 <color name="bookTitle">#000000</color>
 <color name="bookDesc">#ffacacac</color>
 <color name="red">#FF0000</color>
